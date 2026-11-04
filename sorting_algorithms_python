@@ -1,0 +1,86 @@
+def bubble_sort(arr):
+    arr = arr.copy()
+    comparisons = 0
+    swaps = 0
+    n = len(arr)
+
+    for i in range(n):
+        swapped = False
+        for j in range(0, n - i - 1):
+            comparisons += 1
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+                swaps += 1
+                swapped = True
+        if not swapped:
+            break
+
+    return arr, comparisons, swaps
+
+
+def selection_sort(arr):
+    arr = arr.copy()
+    comparisons = 0
+    swaps = 0
+    n = len(arr)
+
+    for i in range(n):
+        min_idx = i
+        for j in range(i + 1, n):
+            comparisons += 1
+            if arr[j] < arr[min_idx]:
+                min_idx = j
+        if min_idx != i:
+            arr[i], arr[min_idx] = arr[min_idx], arr[i]
+            swaps += 1
+
+    return arr, comparisons, swaps
+
+
+def insertion_sort(arr):
+    arr = arr.copy()
+    comparisons = 0
+    shifts = 0
+    n = len(arr)
+
+    for i in range(1, n):
+        key = arr[i]
+        j = i - 1
+        while j >= 0:
+            comparisons += 1
+            if arr[j] > key:
+                arr[j + 1] = arr[j]
+                shifts += 1
+                j -= 1
+            else:
+                break
+        arr[j + 1] = key
+
+    return arr, comparisons, shifts
+
+
+test_cases = {
+    "A. Random": [29, 10, 14, 37, 13, 5, 22],
+    "B. Already sorted": [1, 2, 3, 4, 5, 6, 7],
+    "C. Reverse sorted": [7, 6, 5, 4, 3, 2, 1],
+    "D. Duplicates": [4, 2, 4, 1, 2, 3, 1],
+    "E. Edge - Empty": [],
+    "E. Edge - Single": [42],
+    "E. Edge - Pair": [2, 1],
+}
+
+print("--- SORTING RESULTS ---")
+for name, arr in test_cases.items():
+    print(f"\nTest Case: {name}")
+    print(f"Original: {arr}")
+
+    b_arr, b_comp, b_swaps = bubble_sort(arr)
+    print(f"Bubble Sort:    {b_arr} | Comparisons: {b_comp} | Swaps: {b_swaps}")
+
+    s_arr, s_comp, s_swaps = selection_sort(arr)
+    print(f"Selection Sort: {s_arr} | Comparisons: {s_comp} | Swaps: {s_swaps}")
+
+    i_arr, i_comp, i_shifts = insertion_sort(arr)
+    print(
+        f"Insertion Sort: {i_arr} | Comparisons: {i_comp} | Shifts: {i_shifts}"
+    )
